@@ -4,10 +4,10 @@
   "longitud":"-58.6428",
   "country":"Argentina",
   "dt":20220804,
-  "documentnbr":"00014751203",
+  "documentnbr":"123456678989",
   "documenttype":"DNI",
   "accuracy":"10",
-  "segmento":"RentaAlta, Prefer, Eminent",
-  "servicio":"http://osbhbq.bancogalicia.com.ar/consultaindicadorestarjetas/basica | https://onlinebanking.bancogalicia.com.ar/Tarjetas/GetConsumosTarjetas",
+  "segmento":"ZZZZZZ, AAAAAAA, YYYYYYY",
+  "servicio":"http://testing/consultaindicadorestarjetas/basica | https://testing/Tarjetas/GetConsumosTarjetas",
   "level":"DEBUG"
 }
