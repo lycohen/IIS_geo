@@ -1,0 +1,14 @@
+{
+  "timestamp":"2022-08-03T15:51:06.3619331-03:00",
+  "latitud":"-34.7675",
+  "longitud":"-58.6428",
+  "country":"Argentina",
+  "dt":20220804,
+  "documentnbr":"***",
+  "documenttype":"DNI",
+  "accuracy":"10",
+  "segmento":"RentaAlta, Prefer, Eminent",
+  "servicio":"http://****",
+  "level":"DEBUG"
+}
+
