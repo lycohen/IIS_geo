@@ -1,3 +1,4 @@
+# pyspark --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.0.2
 from pyspark.shell import spark
 
 TOPIC = 'cyxtera_onb_evt_geoclasificado'
@@ -7,6 +8,8 @@ options = {
     "kafka.sasl.mechanism": "PLAINTEXT",
     "kafka.bootstrap.servers": BROKERS,
     "subscribe": TOPIC,
+    "startingOffsets": "earliest",
+    "failOnDataLoss": "false"
 }
 
 df = spark \
@@ -15,4 +18,10 @@ df = spark \
     .options(**options) \
     .load()
 
-query = df.selectExpr("CAST(value AS STRING)").writeStream.format('json').outputMode("append").option("path", "test.json").option('checkpointLocation', '/galicia/d/landing_files/iis_geo').start().awaitTermination()
+query = df.selectExpr("CAST(value AS STRING)")\
+    .writeStream\
+    .option("path", "/galicia/d/landing_files/iis_geo/test")\
+    .option('checkpointLocation', '/galicia/d/landing_files/iis_geo/checks')\
+    .start()\
+    .awaitTermination()
+
