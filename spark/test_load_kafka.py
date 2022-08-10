@@ -9,7 +9,9 @@ options = {
     "kafka.bootstrap.servers": BROKERS,
     "subscribe": TOPIC,
     "startingOffsets": "earliest",
-    "failOnDataLoss": "false"
+    "failOnDataLoss": "false",
+    "minOffsetPerTrigger": "50000",
+    "maxTriggerDelay": "300"
 }
 
 df = spark \
@@ -21,7 +23,7 @@ df = spark \
 query = df.selectExpr("CAST(value AS STRING)")\
     .writeStream\
     .option("path", "/galicia/d/landing_files/iis_geo/test")\
-    .option('checkpointLocation', '/galicia/d/landing_files/iis_geo/checks')\
+    .option('checkpointLocation', '/galicia/d/landing_files/iis_geo/checks') \
     .start()\
     .awaitTermination()
 
