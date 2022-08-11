@@ -53,4 +53,4 @@ SELECT raw.ts
 CREATE TABLE IF NOT EXISTS d_dl_tables.iis_geo_accesos
     STORED AS PARQUET
     LOCATION 'hdfs://GALICIAHADOOP/galicia/d/landing_files/iis_geo/accesos'
-AS SELECT * FROM d_dl_views.iis_geo_accesos;
+AS SELECT DISTINCT * FROM d_dl_views.iis_geo_accesos;

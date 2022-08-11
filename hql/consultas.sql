@@ -17,3 +17,12 @@ SELECT count(*) as hits, acc.client_id, ser.canal, ser.host
 FROM d_dl_tables.iis_geo_accesos acc
          INNER JOIN d_dl_tables.iis_geo_servicios ser on acc.servicio_id = ser.servicio_id
 GROUP BY acc.client_id, ser.canal, ser.host ORDER BY hits DESC;
+
+-- hits por host
+SELECT count(hits) as hits, host FROM
+    (
+        SELECT count(*) as hits, acc.client_id, ser.canal, concat(ser.proto, '://', ser.host) as host
+        FROM d_dl_tables.iis_geo_accesos acc
+                 INNER JOIN d_dl_tables.iis_geo_servicios ser on acc.servicio_id = ser.servicio_id
+        GROUP BY acc.client_id, ser.canal, host ORDER BY hits DESC, acc.client_id
+    ) ht GROUP BY host;
