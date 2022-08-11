@@ -1,4 +1,4 @@
-INVALIDATE METADATA  d_lnd_tables.iis_geo_test;
+INVALIDATE METADATA  d_lnd_tables.iis_geo;
 INVALIDATE METADATA  d_dl_views.iis_geo;
 
 SELECT DISTINCT `dayofweek` FROM d_dl_views.iis_geo;
