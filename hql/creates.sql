@@ -8,10 +8,12 @@ LOCATION 'hdfs://GALICIAHADOOP/galicia/d/landing_files/iis_geo/test';
 -- DROP VIEW d_dl_views.iis_geo;
 CREATE VIEW IF NOT EXISTS d_dl_views.iis_geo AS
 SELECT
-    cast(get_json_object(value, '$.timestamp') as timestamp) as ts
-     , hour(cast(get_json_object(value, '$.timestamp') as timestamp)) as hora
-     , day(cast(get_json_object(value, '$.timestamp') as timestamp)) as `day`
-     , dayofweek(cast(get_json_object(value, '$.timestamp') as timestamp)) as `dayofweek`
+    from_unixtime(unix_timestamp(regexp_replace(get_json_object(value, '$.timestamp'), 'T',' ')), 'yyyy-MM-dd HH:mm:ss') as ts
+     , from_unixtime(unix_timestamp(regexp_replace(get_json_object(value, '$.timestamp'), 'T',' ')), 'HH') as hora
+     , from_unixtime(unix_timestamp(regexp_replace(get_json_object(value, '$.timestamp'), 'T',' ')), 'd') as `day`
+     , from_unixtime(unix_timestamp(regexp_replace(get_json_object(value, '$.timestamp'), 'T',' ')), 'M') as `month`
+     , from_unixtime(unix_timestamp(regexp_replace(get_json_object(value, '$.timestamp'), 'T',' ')), 'yyyy') as `year`
+     , dayofweek(cast(unix_timestamp(regexp_replace(get_json_object(value, '$.timestamp'), 'T',' ')) as timestamp)) as `dayofweek`
      , cast(get_json_object(value, '$.latitud') as double) as latitud
      , cast(get_json_object(value, '$.longitud') as double) as longitud
      , get_json_object(value, '$.country') as country
@@ -68,10 +70,11 @@ SELECT DISTINCT(servicio_id), canal, proto, host FROM
 
 -- DROP VIEW d_dl_views.iis_geo_clientes
 CREATE VIEW IF NOT EXISTS d_dl_views.iis_geo_clientes AS
-SELECT DISTINCT(client_id), document_type,  cast(cast(document_number as bigint) as string)
+SELECT DISTINCT(client_id), document_type,  cast(cast(document_number as bigint) as string) as number
 FROM (
     SELECT sha2(concat_ws('|salt_string_secreto_837673|', cast(cast(document_number as bigint) as string), document_type), 256) as client_id
     , document_type
     , document_number
     FROM d_dl_views.iis_geo
 ) cli;
+
